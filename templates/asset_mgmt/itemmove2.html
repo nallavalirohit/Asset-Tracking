@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="icon" type="image/png" href="../mymedia/images/favicon.ico"/>
+		<script src="../mymedia/js/jquery-1.8.2.js" type="text/javascript"></script>
+		<script src="../mymedia/js/nav_menu.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="../mymedia/css/nav_style.css" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Sonance</title>
+		<script type="text/javascript" src="../mymedia/js/jquery-latest.js"></script>
+		<script type="text/javascript" src="../mymedia/js/jquery.layout-latest.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				$('body').layout({ applyDemoStyles: true });
+			});
+		</script>	
+	</head>
+	<script type="text/javascript">
+		var inner = [];
+		$('li').each( function(index, Element){
+			if (jQuery.inArray(this.innerHTML, inner) == -1){
+			  inner.push(this.innerHTML);
+			}
+			else {
+			  $(this).remove();
+			}
+		});
+	</script>
+	<body>
+		<div class="ui-layout-north">
+			<img src="../mymedia/images/logo.png" alt="Logo" width="100" height="90"/>
+			<table align="right">
+			<tr><td>&emsp;</td></tr>
+			<tr><td>&emsp;</td></tr>
+			<tr><td>&emsp;</td></tr>
+			<tr><td><a href="http://www.coresonant.com/html/contactus.html"/><img src="../mymedia/images/images.PNG" align="right" alt="Logo" width="35" height="35"/></td></tr>
+			</table>
+			<!-- <img src="../mymedia/images/logo-right.jpg" align="right" alt="Logo" width="120" height="60"/> -->
+		</div>
+		<div class="ui-layout-south" align = "center">
+		Copyright © 2013 Coresonant Systems Pvt Ltd. All rights reserved.
+		</div>
+		<div class="ui-layout-east"><font size="2" color="blue">Login As :</font>{{username}}</br>
+			<font size="2" color="blue"> Active Page Link:</font>
+		</div>
+		<div class="ui-layout-west">
+                       <ul id="menu">
+                       {%if contacts %}
+                               {% for i in featuresgroups %}
+                                       <li>
+                                               <a href="#">{{i.Feature_Id.Name}}</a>
+                                               <ul>
+                                                       {% for j in contacts %}
+                                                               {% ifequal i.Feature_Id.id j.FGID %}
+                                                                       <li><a href="/asset_track1/{{i.Feature_Id.id}}/{{j.FIID}}/">{{j.SFINAME}}</a></li>
+                                                               {% endifequal %}
+                                                       {% endfor %}
+                                               </ul>
+                                       </li>
+                               {% endfor %}
+                       {% endif%}
+                       </ul>
+               </div>
+
+
+		
+		<div class="ui-layout-center" >
+    {%if contacts %}
+        <table border="1" align = "center">
+            <tr>
+                <th>Asset</th>
+                <th>Reader</th>
+                <th>Door</th>
+                <th>Entry_Time</th>
+                <th>Exit_Time</th>
+            </tr>
+            {% for r in assertlist %}
+                <tr>
+                    <td align="center">{{r.Asset}}</td>
+                    <td align="center">{{r.reader}}</td>
+                    <td align="center">{{r.door}}</td>
+                    <td align="center">{{r.Entry_Time}}</td>
+                    <td align="center">{{r.Exit_Time}}</td>
+            {% endfor %}
+        </table>
+    {%endif%}
+    <form action="/asset_track1/viewordown.pdf" method = 'POST'>
+   <br/><p style="text-indent: 1em;" align="center">
+    <button type = "submit" name="down" value="{{vid}}" onClick="window.location.href='../media/pdf/report{{vid}}.pdf'"> Download Excel</button>
+      &nbsp;<button type = "submit"  name="print" value="{{root}}\\pdf\\report.pdf" >Download PDF</button>
+     &nbsp;<button type = "submit"  name="view" >View PDF</button>
+       <a href="/smartlogis/rt/"><button type="button">Back</button></a>
+   </form>
+    
+</div>
+		
+		</div>
+	</body>
+</html>
